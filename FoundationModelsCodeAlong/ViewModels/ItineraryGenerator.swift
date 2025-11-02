@@ -19,21 +19,20 @@ final class ItineraryGenerator {
     private var session: LanguageModelSession
     
     // MARK: - [CODE-ALONG] Chapter 4.1.1: Change the property to hold a partially generated Itinerary
-    private(set) var itinerary: Itinerary?
-    
-    // MARK: - [CODE-ALONG] Chapter 5.3.1: Add a property to hold the tool
+    private(set) var itinerary: Itinerary.PartiallyGenerated?
     
 
     init(landmark: Landmark) {
         self.landmark = landmark
+        let pointOfInterestTool = FindPointsOfInterestTool(landmark: landmark)
         let instructions = Instructions {
             "Your job is to create an itinerary for the user."
             "For each day, you must suggest one hotel and one restaurant."
+            "Always use the 'findPointsOfInterest' tool to find hotels and restaurant in \(landmark.name)"
         }
-        self.session = LanguageModelSession(instructions: instructions)
-
-        
-        // MARK: - [CODE-ALONG] Chapter 5.3.2: Initialize LanguageModelSession with Tool
+        self.session = LanguageModelSession(
+            tools: [pointOfInterestTool],
+            instructions: instructions)
                
     }
 
@@ -46,21 +45,21 @@ final class ItineraryGenerator {
                 Itinerary.exampleTripToJapan
             }
             
-            let response = try await session.respond(to: prompt,
-                                                     generating: Itinerary.self)
-            self.itinerary = response.content
+            let stream = session.streamResponse(to: prompt,
+                                                generating: Itinerary.self,
+                                                includeSchemaInPrompt: false
+                                                )
+                                                
+            for try await partialResponse in stream {
+                self.itinerary = partialResponse.content
+            }
         } catch {
             self.error = error
         }
-        // MARK: - [CODE-ALONG] Chapter 3.3: Update to use one-shot prompting
-        // MARK: - [CODE-ALONG] Chapter 4.1.2: Update to use streaming API
-        // MARK: - [CODE-ALONG] Chapter 5.3.1: Update the instructions to use the Tool
-        // MARK: - [CODE-ALONG] Chapter 5.3.2: Update the LanguageModelSession with the tool
-        // MARK: - [CODE-ALONG] Chapter 6.2.1: Update to exclude schema in prompt
          
     }
 
     func prewarmModel() {
-        // MARK: - [CODE-ALONG] Chapter 6.1.1: Add a function to pre-warm the model
+        session.prewarm()
     }
 }
