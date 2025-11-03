@@ -107,8 +107,6 @@ private struct DayView: View {
         .card()
         .animation(.easeInOut, value: plan)
     }
-    
-    
 }
 
 private struct ActivityList: View {
