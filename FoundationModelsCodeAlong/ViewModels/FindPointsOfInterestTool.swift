@@ -43,8 +43,8 @@ enum Category: String, CaseIterable {
 
 func getSuggestions(category: Category, landmark: String) -> [String] {
     switch category {
-    case .hotel : ["Hotel 1", "Hotel 2", "Hotel 3"]
+    case .hotel : ["Hotel 1"]
     case .restaurant : ["Restaurant 1", "Restaurant 2", "Restaurant 3"]
     }
 }
-
+// MARK: FUTURE LEARNING – UPDATE THIS TO GENERATE ACTUAL HOTELS NEAR <landmark>

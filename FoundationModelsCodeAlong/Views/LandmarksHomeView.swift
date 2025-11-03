@@ -12,7 +12,7 @@ struct LandmarksHomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Text("Where would you like to go today!")
+                Text("Where would you like to go today?")
                     .font(.title)
                     .fontWeight(.bold)
                 LazyVStack(alignment: .center, spacing: 20) {
