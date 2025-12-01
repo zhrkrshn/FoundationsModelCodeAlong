@@ -18,7 +18,6 @@ final class ItineraryGenerator {
     
     private var session: LanguageModelSession
     
-    // MARK: - [CODE-ALONG] Chapter 4.1.1: Change the property to hold a partially generated Itinerary
     private(set) var itinerary: Itinerary.PartiallyGenerated?
     
 
@@ -27,7 +26,7 @@ final class ItineraryGenerator {
         let pointOfInterestTool = FindPointsOfInterestTool(landmark: landmark)
         let instructions = Instructions {
             "Your job is to create an itinerary for the user."
-            "For each day, you must suggest one hotel and one restaurant."
+            "For each day, you must suggest one restaurant."
             "Always use the 'findPointsOfInterest' tool to find hotels and restaurant in \(landmark.name)"
         }
         self.session = LanguageModelSession(

@@ -47,4 +47,4 @@ func getSuggestions(category: Category, landmark: String) -> [String] {
     case .restaurant : ["Restaurant 1", "Restaurant 2", "Restaurant 3"]
     }
 }
-// MARK: FUTURE LEARNING – UPDATE THIS TO GENERATE ACTUAL HOTELS NEAR <landmark>
+// MARK: FUTURE LEARNING – UPDATE THIS TO GENERATE ACTUAL HOTELS AND RESTAURANTS NEAR <landmark>
